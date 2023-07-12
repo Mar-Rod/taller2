@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+  <div id="myDiv"></div>
+  <script>
+    fetch('https://pokeapi.co/api/v2/pokemon?limit=10')
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        // Crear trazado de Plotly
+        var trace = {
+          x: data.results.map(function(entry) {
+            return entry.name;
+          }),
+          y: data.results.map(function(entry) {
+            return entry.url;
+          }),
+          type: 'bar',
+        };
+        var layout = { 
+          title: 'API de Pokemon',
+          xaxis: {
+            title: 'Nombre del Pokemon'
+          },
+          yaxis: {
+            title: 'URL'
+          }
+        };
+        var data = [trace];
+        Plotly.newPlot('myDiv', data, layout);
+      });
+  </script>
+</body>
+</html>
